@@ -1,5 +1,5 @@
 // CHANGE THIS ↓↓↓ WITH YOUR UPI ID
-const upi_id = "8349624736@ybl";  
+const upi_id = "7879959221@ibl";  
 const amount = 10;
 
 document.getElementById("payBtn").onclick = function () {
@@ -43,4 +43,5 @@ document.getElementById("regForm").onsubmit = function (e) {
     // Optionally: disable form after submit
     // document.getElementById("regForm").reset();
 };
+
 
