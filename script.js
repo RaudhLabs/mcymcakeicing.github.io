@@ -4,11 +4,22 @@ const amount = 500;
 
 document.getElementById("payBtn").onclick = function () {
 
-    // Create universal UPI deep link
-    const upiLink =
-        `upi://pay?pa=${upi_id}&pn=Registration&am=${amount}&cu=INR`;
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
 
-    // Try to open in Google Pay / PhonePe
+    if (!name || !phone) {
+        alert("Please enter your Name and Phone before paying.");
+        return;
+    }
+
+    // Add dynamic note to UPI
+    const note = encodeURIComponent(`Reg-${name}-${phone}`);
+
+    // Universal UPI deep link
+    const upiLink =
+        `upi://pay?pa=${upi_id}&pn=Registration&am=${amount}&cu=INR&tn=${note}`;
+
+    // Open UPI apps
     window.location.href = upiLink;
 };
 
@@ -17,14 +28,18 @@ document.getElementById("regForm").onsubmit = function (e) {
 
     const txnId = document.getElementById("txnId").value.trim();
 
-    if (txnId.length < 8) {
+    // Basic UTR validation (UPI Txn ID is usually > 12 chars)
+    if (txnId.length < 10) {
         alert("Payment NOT verified! Enter a valid Transaction ID.");
         return;
     }
 
     document.getElementById("successMsg").style.display = "block";
-    document.getElementById("successMsg").innerHTML = "Registration Successful! Payment Verified.";
-    
-    alert("Registration Successful!");
-};
+    document.getElementById("successMsg").innerHTML =
+        "Registration Successful! Payment Verified.";
 
+    alert("Registration Successful!");
+
+    // Optionally: disable form after submit
+    // document.getElementById("regForm").reset();
+};
